@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/fdr.css" type="text/css">
+    <link rel="stylesheet" href="css/translate.css" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/solid.css" integrity="sha384-+0VIRx+yz1WBcCTXBkVQYIBVNEFH1eP6Zknm16roZCyeNg2maWEpk/l/KsyFKs7G" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/fontawesome.css" integrity="sha384-jLuaxTTBR42U2qJ/pm4JRouHkEDHkVqH0T1nyQXn1mZ7Snycpf6Rl25VBNthU4z0" crossorigin="anonymous">
+    <title>Heart Failure Program - Flexible Diuretic Regimen</title>
+  </head>
+  <body>
+    <div class="globalContainer" id="app">
+    <div class="container" id="app" v-show="display == 'fdr'">
+
+
+        <div class="row">
+          <div class="col headline">
+            <H2 class="text-center">Your Flexible Diuretic Regimen</H2>
+          </div>
+        </div>
+
+
+        <div class="row" style="margin-top: 1.1rem">
+          <div class="col-md-6 align-middle text-center inputCol inputWeightCol">
+            <div class="inputLabel d-inline align-middle">
+                Your Target Weight:
+            </div>
+            <input type="number" v-model.number="targetweightI" class="text-center d-inline inputText align-middle" name="weight" id="weight" style="width: 5rem;">
+            <div class="dropdown d-inline">
+              <button class="btn btn-secondary dropdown-toggle align-middle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ unit }}
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" v-on:click="unit = 'kg'" href="#">Kilograms</a>
+                <a class="dropdown-item" v-on:click="unit = 'lb'" href="#">Pounds</a>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-md-6 inputCol align-middle text-center">
+              <table class="startingDose">
+                <tr>
+                  <td rowspan="2" class="inputLabel align-middle">Current Furosemide Dose:</td>
+                  <td class="startingAMcol"> AM: <input type="number" v-model.number="startingdoseAm" class="text-center d-inline inputText align-middle" name="weight" id="weight" style="width: 3.5rem;">mg</td>
+                </tr>
+                <tr v-bind:class="[(startingdosePm==='')? 'inactive' : '']">
+                    <td class="startingPMcol">PM: <input type="number" v-model.number="startingdosePm" class="text-center d-inline inputText align-middle"
+                      v-bind:class="[startingdosePm=='' ? 'inactive' : '']" name="weight" id="weight" style="width: 3.5rem;">mg</td>
+                </tr>
+              </table>
+              <!--div class="inputLabel d-inline align-middle">
+                  Current Furosemide Dose:
+              </div>
+              <input type="number" v-model.number="startingdose" class="text-center d-inline inputText align-middle" name="weight" id="weight" style="width: 3.5rem;">
+              <div class="inputLabel d-inline align-middle">
+                  mg
+              </div-->
+          </div>
+      </div>
+        <div class="row dateContainer">
+          <div class="text-center" style="width: 100%;">
+            <div class="d-inline text-center dateLabel ">Date:</div>
+            <div class="d-inline text-center dateInput">{{ nowDate() }}</div>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 1.5rem">
+          <div class="col text-center dateCol">
+            <div class="d-inline align-middle instructionsTitle">
+              Instructions
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top: 1.1rem">
+          <div class="instructions">
+            <ul>
+              <li>Weigh yourself first thing in the morning after emptying your bladder and before breakfast.</li>
+            	<li>Record your weight on your daily weight record.</li>
+              <li>Find your weight on the chart below.  Look to the right, and take the dose of furosemide (Lasix) according to the directions.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 1.1rem">
+          <div class="col text-center dateCol">
+            <div class="d-inline align-middle tableTitle">
+              Diuretic Regimen
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top: 1.1rem">
+          <div class="col" v-show="ready">
+            <table class="table fdrTable">
+                <thead>
+                  <tr>
+                    <th scope="col" class="weightCol">Weight</th>
+                    <th scope="col" class="diureticCol">Diuretic Dose</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td scope="row" class="weightCol" contenteditable="true">Less than {{ level1b }}&nbsp;{{ unit }}</td>
+                    <td contenteditable="true" class="diureticCol"><span v-if="level1dose == 0">Don't take furosemide</span>
+                        <span v-if="level1dose != 0">Take {{ level1dose }} mg ({{ numberOfTablets(level1dose) }}) of furosemide in the morning
+                          <span v-if="level1bid"> and {{level1dose}} mg ({{ numberOfTablets(level1dose) }}) in the afternoon</span>
+                        </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td scope="row" class="targetCell weightCol" contenteditable="true">Between {{level2a}} and {{level2b}}&nbsp;{{ unit }}</td>
+                    <td contenteditable="true" class="targetCell diureticCol">
+                        <span v-if="level2dose == 0">Don't take furosemide</span>
+                        <span v-if="level2dose != 0">Take {{startingdoseAm}} mg ({{ numberOfTablets(startingdoseAm) }}) of furosemide in the morning</span>
+                        <span v-if="level2bid"> and {{startingdosePm}} mg ({{ numberOfTablets(startingdosePm) }}) in the afternoon</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td scope="row" class="weightCol" contenteditable="true">Between {{level3a}} and {{level3b}}&nbsp;{{ unit }}</td>
+                    <td contenteditable="true" class="diureticCol">Take {{level3dose}} mg ({{ numberOfTablets(level3dose) }}) of furosemide in the morning
+                        <span v-if="level3bid"> and {{level3dose}} mg ({{ numberOfTablets(level3dose) }}) in the afternoon</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td scope="row" class="weightCol" contenteditable="true">Over {{level4a}}&nbsp;{{ unit }}</td>
+                    <td contenteditable="true" class="diureticCol">
+                        <span v-if="level4metolazone">Take 2.5mg of metolazone 30min before the morning furosemide dose.</span>
+                        Take {{level4dose}} mg ({{ numberOfTablets(level4dose) }}) of furosemide in the morning
+                        <span v-if="level4bid"> and {{level4dose}} mg ({{ numberOfTablets(level4dose) }}) in the afternoon</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+          </div>
+          <div class="col" v-show="!ready">
+            <div class="incomplete">
+              Please complete information above
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top: 1.5rem">
+          <div class="col text-center dateCol">
+            <div class="d-inline align-middle instructionsTitle">
+              WARNINGS
+            </div>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 1.1rem">
+          <div class="instructions text-center">
+            If your weight does not come down after 3 days of highest dose of furosemide,
+            <span class="dangerLink" data-toggle="modal" data-target="#instructionModal">{{dangerInstruction}}</span>
+            <span class="hidePrint dangerLinkNote">(click to change)</span>
+            <br/><br/>
+
+            NOTE: ‘Target Weight’ may change!  Please contact clinic if you think you may have gained or lost body weight.
+          </div>
+        </div>
+
+        <div class="signature pageBreakAfter">
+            Created by Dr. Pavel Antiperovitch for the Heart Failure program at the London Health Sciences Centre
+        </div>
+    </div>
+<!-- -----------------------DISPLAY WEIGHT TABLE ---------------------------------- -->
+
+    <div class="container">
+
+          <div class="weightTableContainer" v-show="display == 'weightTable'" style="display:none;">
+
+              <div class="alert alert-warning alert-dismissible fade show alertWeightTable" v-show="display == 'weightTable'" role="alert">
+                <strong>You have clicked on the weight scale!</strong> Enter in the length of time and print.  If you want to go back to the FDR page click on the same button again.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+
+            <div class="alert alert-primary wInput" role="alert">
+                How many months? <input type="text" v-model.number="wRows">
+            </div>
+            <br/>
+
+            <table class="weightTable">
+                <tr>
+                  <th class="wDateCol">Date</th>
+                  <th class="wWeightCol">Weight</th>
+                  <th class="wDoseCol">Dose</th>
+                </tr>
+                <tr v-for="n in wRows">
+                  <td>{{wDate(n)}}</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+            </table>
+          </div>
+
+      </div>
+
+      <div class="controlPanel">
+          <div id="google_translate_element"></div>
+      </div>
+      <span class="hidePrint printButton">
+        <i class="fas fa-print" onclick="window.print()"></i><br/>
+        <i class="fas fa-table" v-on:click="toggleWeightTable()"></i>
+      </span>
+
+
+      <div class="modal fade" id="instructionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Select contact information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <ul>
+                    <li class="dangerChoice"><button type="button" class="btn btn-primary btn-sm listButton" v-on:click="changeInstruction($event)">call the heart failure clinic at 519-663-3428</button></li>
+                    <li class="dangerChoice"><button type="button" class="btn btn-primary btn-sm listButton" v-on:click="changeInstruction($event)">call CC2H at 519-663-3428</button></li>
+                    <li class="dangerChoice"><button type="button" class="btn btn-primary btn-sm listButton" v-on:click="changeInstruction($event)">call St. Joseph's heart failure clinic at 519-646-6000 ext 61700</button></li>
+                    <li class="dangerChoice"><button type="button" class="btn btn-primary btn-sm listButton" v-on:click="changeInstruction($event)">call your family doctor</button></li>
+                    <li class="dangerChoice">Custom: <input type="text" class="dangerCustom" name="dangerCustom" v-model="dangerInstruction" id="dangerCustom"></li>
+                </ul>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <!--button type="button" class="btn btn-primary">Save changes</button-->
+              </div>
+            </div>
+          </div>
+      </div>
+
+
+
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script src="../node_modules/moment/moment.js"></script>
+
+    <script src="js/fdr.js"></script>
+    <script src-"js/translate.js"></script>
+  </body>
+</html>
+
+
+For background-color, instead of using:
+
+background-color: red
+Use:
+
+background-color: unset;
+box-shadow: inset 0 0 0 1000px red /* 1000px is a random high
+                                     number that is definitely
+                                     larger than the box dimension*/
+Also for color, instead of:
+
+color: grey;
+Use:
+
+color: unset;
+text-shadow: 0 0 grey;
+You may restrict them to print only by using @media print, but you do not have to!
+
+Note: Sometimes you should use background-color: transparent; or color: transparent; if the color or background-color are inherited from parent elements.
