@@ -4,6 +4,7 @@ var timeout = null;
 var app = new Vue({
   el: '#app',
   data: {
+    patientName: '',
     targetweight: 80,
     unit: 'kg',
     startingdoseAm: 40,
@@ -268,3 +269,27 @@ function googleTranslateElementInit() {
     'google_translate_element'
   );
 }
+
+
+//   -----------SOME METHODS TO MAKE FIELDS DYNAMICALLY CHANGE WIDTH
+$.fn.textWidth = function(text, font) {
+    if (!$.fn.textWidth.fakeEl) $.fn.textWidth.fakeEl = $('<span>').hide().appendTo(document.body);
+    $.fn.textWidth.fakeEl.text(text || this.val() || this.text() || this.attr('placeholder')).css('font', font || this.css('font'));
+    var fudgeFactor = 20;
+    return $.fn.textWidth.fakeEl.width()+fudgeFactor;
+};
+
+$('.width-dynamic').on('input', function() {
+    var inputWidth = $(this).textWidth();
+    $(this).css({
+        width: inputWidth
+    })
+}).trigger('input');
+
+function inputWidth(elem, minW, maxW) {
+    elem = $(this);
+}
+
+var targetElem = $('.width-dynamic');
+
+inputWidth(targetElem);

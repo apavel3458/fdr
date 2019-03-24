@@ -25,19 +25,27 @@
         </div>
 
 
-        <div class="row" style="margin-top: 1.1rem">
+        <div class="row" style="margin-top: 0.5rem">
           <div class="col-md-6 align-middle text-center inputCol inputWeightCol">
-            <div class="inputLabel d-inline align-middle">
-                Your Target Weight:
+            <div class="inputWeightColData" :class="{hidePrint:!patientName}">
+              <div class="inputLabel d-inline align-middle">
+                  Name:
+              </div>
+              <input type="text" v-model.name="patientName" class="text-center width-dynamic d-inline inputText align-middle patientNameInput" name="patientName" id="patientName">
             </div>
-            <input type="number" v-model.number="targetweightI" class="text-center d-inline inputText align-middle" name="weight" id="weight" style="width: 5rem;">
-            <div class="dropdown d-inline">
-              <button class="btn btn-secondary dropdown-toggle align-middle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ unit }}
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" v-on:click="unit = 'kg'" href="#">Kilograms</a>
-                <a class="dropdown-item" v-on:click="unit = 'lb'" href="#">Pounds</a>
+            <div class="inputWeightColData">
+              <div class="inputLabel d-inline align-middle">
+                  Your Target Weight:
+              </div>
+              <input type="number" v-model.number="targetweightI" class="text-center d-inline inputText align-middle" name="weight" id="weight" style="width: 5rem;">
+              <div class="dropdown d-inline">
+                <button class="btn btn-secondary dropdown-toggle align-middle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{ unit }}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" v-on:click="unit = 'kg'" href="#">Kilograms</a>
+                  <a class="dropdown-item" v-on:click="unit = 'lb'" href="#">Pounds</a>
+                </div>
               </div>
             </div>
 
