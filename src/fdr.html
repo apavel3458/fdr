@@ -1,6 +1,16 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137362189-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-137362189-1');
+    </script>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -231,10 +241,10 @@
               </div>
               <div class="modal-body">
                 <ul>
-                    <li class="dangerChoice"><button type="button" class="btn btn-primary btn-sm listButton" v-on:click="changeInstruction($event)">call the heart failure clinic at 519-663-3428</button></li>
-                    <li class="dangerChoice"><button type="button" class="btn btn-primary btn-sm listButton" v-on:click="changeInstruction($event)">call Connecting Care to Home (CC2H) at 1 (844) 866-2248</button></li>
-                    <li class="dangerChoice"><button type="button" class="btn btn-primary btn-sm listButton" v-on:click="changeInstruction($event)">call St. Joseph's heart failure clinic at 519-646-6000 ext 61700</button></li>
-                    <li class="dangerChoice"><button type="button" class="btn btn-primary btn-sm listButton" v-on:click="changeInstruction($event)">call your family doctor</button></li>
+                    <!-- <li class="dangerChoice"><button type="button" class="btn btn-primary btn-sm listButton" v-on:click="changeInstruction($event)">call the heart failure clinic at 519-663-3428</button></li> -->
+                    <!-- <li class="dangerChoice"><button type="button" class="btn btn-primary btn-sm listButton" v-on:click="changeInstruction($event)">call Connecting Care to Home (CC2H) at 1 (844) 866-2248</button></li> -->
+                    <!-- <li class="dangerChoice"><button type="button" class="btn btn-primary btn-sm listButton" v-on:click="changeInstruction($event)">call St. Joseph's heart failure clinic at 519-646-6000 ext 61700</button></li> -->
+                    <!-- <li class="dangerChoice"><button type="button" class="btn btn-primary btn-sm listButton" v-on:click="changeInstruction($event)">call your family doctor</button></li> -->
                     <li class="dangerChoice">Custom: <input type="text" class="dangerCustom" name="dangerCustom" v-model="dangerInstruction" id="dangerCustom"></li>
                 </ul>
               </div>

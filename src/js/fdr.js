@@ -14,7 +14,7 @@ var app = new Vue({
     level3bid: false,
     level4bid: false,
     level4metolazone: false,
-    dangerInstruction: 'call the heart failure clinic at 519-663-3428',
+    dangerInstruction: 'call your family doctor',
     display: 'fdr',
     firstDisplayChange: true,
     wRows: 30,
