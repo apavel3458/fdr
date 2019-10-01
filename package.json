@@ -4,14 +4,29 @@
   "description": "Flexible Diuretic Regimen",
   "main": "index.js",
   "dependencies": {
-    "bootstrap": "^4.2.1",
-    "jquery": "^3.3.1",
-    "js-big-decimal": "^1.2.1",
-    "moment": "^2.23.0"
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1",
+    "js-big-decimal": "^1.2.2",
+    "moment": "^2.24.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "browserify": "^16.5.0",
+    "clean-css-cli": "^4.3.0",
+    "concat": "^1.0.3",
+    "scss": "^0.2.4",
+    "uglify-js": "^3.6.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "concat:css": "concat -o dist/css/fdr.css src/css/fdr.css src/css/translate.css",
+    "concat:js": "mkdir -p dist/js && concat -o dist/js/fdr.js src/js/fdr.js src/js/translate.js",
+    "concat": "npm run concat:css && npm run concat:js",
+    "cssmin": "cleancss -o dist/css/fdr.css dist/css/fdr.css",
+    "uglify": "uglifyjs -o dist/js/fdr.js dist/js/fdr.js",
+    "imagemin": "imagemin --out-dir=dist/img assets/img/**/*.{png,jpg,gif}",
+    "build:css": "npm run scss && npm run concat:css && npm run cssmin",
+    "build:js": "npm run concat:js && npm run uglify",
+    "build:img": "npm run imagemin",
+    "build": "cp -rf src/* dist/ && uglifyjs src/js/fdr.js -mc > dist/js/fdr.js && uglifyjs src/js/translate.js -mc > dist/js/translate.js"
   },
   "repository": {
     "type": "git",
