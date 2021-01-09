@@ -170,7 +170,7 @@
           </div>
         </div>
         <div class="row" style="margin-top: 1.1rem">
-          <div class="instructions text-center">
+          <div class="instructions text-center" style="margin: 0 15px;">
             If your weight does not come down after 3 days of highest dose of furosemide,
             <span class="dangerLink" data-toggle="modal" data-target="#instructionModal">{{dangerInstruction}}</span>
             <span class="hidePrint dangerLinkNote">(click to change)</span>
@@ -181,6 +181,7 @@
         </div>
 
         <div class="signature pageBreakAfter">
+            Disclaimer: For educational use only.  This tool has not been rigorously tested in research and is not recommended for clinical use at this time.<br/>
             Created by Dr. Pavel Antiperovitch for the Heart Failure program at the London Health Sciences Centre
         </div>
     </div>
@@ -241,15 +242,18 @@
               </div>
               <div class="modal-body">
                 <ul>
-                    <!-- <li class="dangerChoice"><button type="button" class="btn btn-primary btn-sm listButton" v-on:click="changeInstruction($event)">call the heart failure clinic at 519-663-3428</button></li> -->
-                    <!-- <li class="dangerChoice"><button type="button" class="btn btn-primary btn-sm listButton" v-on:click="changeInstruction($event)">call Connecting Care to Home (CC2H) at 1 (844) 866-2248</button></li> -->
-                    <!-- <li class="dangerChoice"><button type="button" class="btn btn-primary btn-sm listButton" v-on:click="changeInstruction($event)">call St. Joseph's heart failure clinic at 519-646-6000 ext 61700</button></li> -->
-                    <!-- <li class="dangerChoice"><button type="button" class="btn btn-primary btn-sm listButton" v-on:click="changeInstruction($event)">call your family doctor</button></li> -->
+                    <div v-show="lhscButton">
+                    <li class="dangerChoice"><button type="button" class="btn btn-primary btn-sm listButton" v-on:click="changeInstruction($event)">call the heart failure clinic at 519-663-3428</button></li>
+                    <li class="dangerChoice"><button type="button" class="btn btn-primary btn-sm listButton" v-on:click="changeInstruction($event)">call Connecting Care to Home (CC2H) at 1 (844) 866-2248</button></li>
+                    <li class="dangerChoice"><button type="button" class="btn btn-primary btn-sm listButton" v-on:click="changeInstruction($event)">call St. Joseph's heart failure clinic at 519-646-6000 ext 61700</button></li>
+                    <li class="dangerChoice"><button type="button" class="btn btn-primary btn-sm listButton" v-on:click="changeInstruction($event)">call your family doctor</button></li>
+                    </div>
                     <li class="dangerChoice">Custom: <input type="text" class="dangerCustom" name="dangerCustom" v-model="dangerInstruction" id="dangerCustom"></li>
-                </ul>
+                  </ul>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn lhscButton" @click="lhscButton=!lhscButton">LHSC HF Program</button>
                 <!--button type="button" class="btn btn-primary">Save changes</button-->
               </div>
             </div>
@@ -265,10 +269,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script src="../node_modules/moment/moment.js"></script>
 
     <script src="js/fdr.js"></script>
-    <script src-"js/translate.js"></script>
+    <script src="js/translate.js"></script>
   </body>
 </html>

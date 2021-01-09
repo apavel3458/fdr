@@ -18,7 +18,8 @@ var app = new Vue({
     display: 'fdr',
     firstDisplayChange: true,
     wRows: 30,
-    wCurrentRowHighlighted: false
+    wCurrentRowHighlighted: false,
+    lhscButton: false
   },
   created: function() {
     this.translate();

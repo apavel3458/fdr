@@ -7,7 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/fdr.css" type="text/css">
+    <link rel="stylesheet" href="css/fdr.css?v=14" type="text/css">
     <link rel="stylesheet" href="css/translate.css" type="text/css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/solid.css" integrity="sha384-+0VIRx+yz1WBcCTXBkVQYIBVNEFH1eP6Zknm16roZCyeNg2maWEpk/l/KsyFKs7G" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/fontawesome.css" integrity="sha384-jLuaxTTBR42U2qJ/pm4JRouHkEDHkVqH0T1nyQXn1mZ7Snycpf6Rl25VBNthU4z0" crossorigin="anonymous">
@@ -163,6 +163,7 @@
         </div>
 
         <div class="signature pageBreakAfter">
+            Disclaimer: For educational use only this has not been rigorously tested in research and is not recommended for clinical use at this time.
             Created by Dr. Pavel Antiperovitch for the Heart Failure program at the London Health Sciences Centre
         </div>
     </div>
@@ -247,28 +248,9 @@
     <script src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script src="../node_modules/moment/moment.js"></script>
 
-    <script src="js/fdr.js"></script>
-    <script src-"js/translate.js"></script>
+    <script src="js/fdr.js?v=14"></script>
+    <script src="js/translate.js"></script>
   </body>
 </html>
 
 
-For background-color, instead of using:
-
-background-color: red
-Use:
-
-background-color: unset;
-box-shadow: inset 0 0 0 1000px red /* 1000px is a random high
-                                     number that is definitely
-                                     larger than the box dimension*/
-Also for color, instead of:
-
-color: grey;
-Use:
-
-color: unset;
-text-shadow: 0 0 grey;
-You may restrict them to print only by using @media print, but you do not have to!
-
-Note: Sometimes you should use background-color: transparent; or color: transparent; if the color or background-color are inherited from parent elements.

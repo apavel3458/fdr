@@ -193,6 +193,22 @@ html, body {
   page-break-after: always;
 }
 
+.lhscButton {
+  position: absolute;
+  left: 0px;
+  bottom: 2px;
+  font-size: 10px;
+  background-color: white;
+  border: 1px solid white;
+  box-shadow: none;
+  color: white;
+  padding: 3px;
+}
+.lhscButton:hover {
+  background-color: #d2d2d2;
+  color: white;
+}
+
 /* --------------WEIGHT TABLE CSS------------- */
 
 .wInput {
